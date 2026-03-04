@@ -16,13 +16,6 @@ const { wishlistLink } = useAuth();
         </div>
       </div>
       <div class="w-[42.857%] lg:w-auto">
-        <div class="mb-1 font-semibold text-gray-900 dark:text-white">{{ $t('general.information') }}</div>
-        <div class="text-sm text-gray-700 dark:text-gray-300">
-          <p class="py-1.5">OwlDeals.co.uk — Discount gifts with UK free shipping.</p>
-          <a class="py-1.5 block" href="mailto:support@owldeals.co.uk">support@owldeals.co.uk</a>
-        </div>
-      </div>
-      <div class="w-[42.857%] lg:w-auto">
         <div class="mb-1 font-semibold text-gray-900 dark:text-white">{{ $t('general.products') }}</div>
         <div class="text-sm text-gray-700 dark:text-gray-300">
           <ClientOnly>
