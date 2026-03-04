@@ -39,7 +39,7 @@ const createStripeElements = async () => {
           billingDetails: {
             name: 'auto',
             email: 'auto',
-            phone: 'never',
+            phone: 'auto',
             address: 'never',
           },
         },
