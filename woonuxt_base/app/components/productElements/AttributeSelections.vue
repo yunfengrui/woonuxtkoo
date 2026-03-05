@@ -309,6 +309,116 @@ const setInitialSelections = () => {
 
 const className = (name: string) => (name ? `name-${name.toLowerCase().split(' ').join('-')}` : '');
 
+const COLOR_HEX: Record<string, string> = {
+  gold: '#D4AF37',
+  'champagnegold': '#E4C27A',
+  'champagne-gold': '#E4C27A',
+  silver: '#C0C0C0',
+  'rose-gold': '#B76E79',
+  spacegray: '#4B4B4B',
+  graphite: '#3A3A3A',
+  charcoal: '#36454F',
+  white: '#FFFFFF',
+  offwhite: '#F8F8F8',
+  ivory: '#FFFFF0',
+  beige: '#F5F5DC',
+  cream: '#FFFDD0',
+  black: '#000000',
+  gray: '#808080',
+  grey: '#808080',
+  lightgray: '#D3D3D3',
+  darkgray: '#4B4B4B',
+  blue: '#3B82F6',
+  navy: '#001F3F',
+  cobalt: '#0047AB',
+  skyblue: '#87CEEB',
+  indigo: '#4B0082',
+  cyan: '#00BCD4',
+  turquoise: '#40E0D0',
+  aqua: '#00FFFF',
+  green: '#22C55E',
+  forestgreen: '#228B22',
+  emerald: '#50C878',
+  lime: '#A3E635',
+  yellow: '#EAB308',
+  mustard: '#FFDB58',
+  orange: '#F97316',
+  peach: '#FFDAB9',
+  coral: '#FF7F50',
+  red: '#EF4444',
+  crimson: '#DC143C',
+  maroon: '#800000',
+  burgundy: '#800020',
+  wine: '#722F37',
+  magenta: '#FF00FF',
+  pink: '#FFC0CB',
+  'hot-pink': '#FF69B4',
+  purple: '#A855F7',
+  lavender: '#E6E6FA',
+  violet: '#8F00FF',
+  teal: '#008080',
+  mint: '#3EB489',
+  olive: '#808000',
+  khaki: '#C3B091',
+  brown: '#8B4513',
+  tan: '#D2B48C',
+  camel: '#C19A6B',
+};
+
+const resolveColorHex = (slug?: string | null): string | null => {
+  const v = normalizeMatchValue(slug);
+  if (!v) return null;
+  if (COLOR_HEX[v]) return COLOR_HEX[v];
+  if (v.includes('gold')) return COLOR_HEX['gold'];
+  if (v.includes('silver')) return COLOR_HEX['silver'];
+  if (v.includes('rose') && v.includes('gold')) return COLOR_HEX['rose-gold'];
+  if (v.includes('champagne') && v.includes('gold')) return COLOR_HEX['champagnegold'];
+  if (v.includes('space') && v.includes('gray')) return COLOR_HEX['spacegray'];
+  if (v.includes('graphite')) return COLOR_HEX['graphite'];
+  if (v.includes('charcoal')) return COLOR_HEX['charcoal'];
+  if (v.includes('white')) return COLOR_HEX['white'];
+  if (v.includes('off') && v.includes('white')) return COLOR_HEX['offwhite'];
+  if (v.includes('ivory')) return COLOR_HEX['ivory'];
+  if (v.includes('beige')) return COLOR_HEX['beige'];
+  if (v.includes('cream')) return COLOR_HEX['cream'];
+  if (v.includes('black')) return COLOR_HEX['black'];
+  if (v.includes('grey') || v.includes('gray')) return COLOR_HEX['gray'];
+  if (v.includes('navy')) return COLOR_HEX['navy'];
+  if (v.includes('cobalt')) return COLOR_HEX['cobalt'];
+  if (v.includes('sky') && v.includes('blue')) return COLOR_HEX['skyblue'];
+  if (v.includes('indigo')) return COLOR_HEX['indigo'];
+  if (v.includes('cyan')) return COLOR_HEX['cyan'];
+  if (v.includes('turquoise')) return COLOR_HEX['turquoise'];
+  if (v.includes('aqua')) return COLOR_HEX['aqua'];
+  if (v.includes('forest') && v.includes('green')) return COLOR_HEX['forestgreen'];
+  if (v.includes('emerald')) return COLOR_HEX['emerald'];
+  if (v.includes('lime')) return COLOR_HEX['lime'];
+  if (v.includes('mustard')) return COLOR_HEX['mustard'];
+  if (v.includes('peach')) return COLOR_HEX['peach'];
+  if (v.includes('coral')) return COLOR_HEX['coral'];
+  if (v.includes('crimson')) return COLOR_HEX['crimson'];
+  if (v.includes('maroon')) return COLOR_HEX['maroon'];
+  if (v.includes('burgundy')) return COLOR_HEX['burgundy'];
+  if (v.includes('wine')) return COLOR_HEX['wine'];
+  if (v.includes('magenta')) return COLOR_HEX['magenta'];
+  if (v.includes('hot') && v.includes('pink')) return COLOR_HEX['hot-pink'];
+  if (v.includes('lavender')) return COLOR_HEX['lavender'];
+  if (v.includes('violet')) return COLOR_HEX['violet'];
+  if (v.includes('teal')) return COLOR_HEX['teal'];
+  if (v.includes('mint')) return COLOR_HEX['mint'];
+  if (v.includes('olive')) return COLOR_HEX['olive'];
+  if (v.includes('khaki')) return COLOR_HEX['khaki'];
+  if (v.includes('brown')) return COLOR_HEX['brown'];
+  if (v.includes('tan')) return COLOR_HEX['tan'];
+  if (v.includes('camel')) return COLOR_HEX['camel'];
+  return null;
+};
+
+const getColorStyle = (slug?: string | null): Record<string, string> => {
+  const hex = resolveColorHex(slug);
+  return hex ? { backgroundColor: hex } : {};
+};
+
 watch(
   () => [attributes, defaultAttributes, variations],
   () => setInitialSelections(),
@@ -380,6 +490,7 @@ watch(
                 <span
                   class="color-button"
                   :class="[`color-${term.slug}`, { 'is-disabled': !isOptionEnabled(attr.name || '', term.slug || '') }]"
+                  :style="getColorStyle(term.slug || '')"
                   :title="`${attr.label || attr.name}: ${term.name || term.slug}`"></span>
               </label>
             </Tooltip>

@@ -44,8 +44,8 @@ useSeoMeta({
       <div class="flex items-center gap-8 p-8 bg-white dark:bg-gray-800 rounded-lg">
         <img src="/icons/box.svg" width="60" height="60" alt="Free Shipping" loading="lazy" />
         <div>
-          <h3 class="text-xl font-semibold dark:text-white">Free Shipping</h3>
-          <p class="text-sm dark:text-gray-300">Free shipping on order over €50</p>
+          <h3 class="text-xl font-semibold dark:text-white">Free Delivery</h3>
+          <p class="text-sm dark:text-gray-300">Free UK Delivery</p>
         </div>
       </div>
       <div class="flex items-center gap-8 p-8 bg-white dark:bg-gray-800 rounded-lg">
@@ -58,7 +58,7 @@ useSeoMeta({
       <div class="flex items-center gap-8 p-8 bg-white dark:bg-gray-800 rounded-lg">
         <img src="/icons/secure.svg" width="60" height="60" alt="Secure Payment" loading="lazy" />
         <div>
-          <h3 class="text-xl font-semibold dark:text-white">100% Payment Secure</h3>
+          <h3 class="text-xl font-semibold dark:text-white">100% Secure</h3>
           <p class="text-sm dark:text-gray-300">Your payment are safe with us.</p>
         </div>
       </div>
