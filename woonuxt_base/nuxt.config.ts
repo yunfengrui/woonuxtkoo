@@ -92,7 +92,7 @@ export default defineNuxtConfig({
   // Multilingual support
   i18n: {
     locales: [
-      { code: 'en_US', file: 'en-US.json', name: 'English 🇺🇸' },
+      { code: 'en_US', file: 'en-US.json', name: 'English uk' },
       { code: 'de_DE', file: 'de-DE.json', name: 'Deutsch 🇩🇪' },
       { code: 'es_ES', file: 'es-ES.json', name: 'Español 🇪🇸' },
       { code: 'fr_FR', file: 'fr-FR.json', name: 'Français 🇫🇷' },

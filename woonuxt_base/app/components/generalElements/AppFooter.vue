@@ -36,7 +36,7 @@ const { wishlistLink } = useAuth();
               <a href="/products?orderby=rating&order=ASC&filter=rating[1]" class="py-1.5 block">{{ $t('shop.topRated') }}</a>
             </template>
           </ClientOnly>
-          <a href="/" class="py-1.5 block">{{ $t('shop.giftCards') }}</a>
+          
         </div>
       </div>
       <div class="w-[42.857%] lg:w-auto">
@@ -48,9 +48,24 @@ const { wishlistLink } = useAuth();
               <a href="/contact" class="py-1.5 block">{{ $t('general.contactUs') }}</a>
             </template>
           </ClientOnly>
-          <a href="/" class="py-1.5 block">{{ $t('general.shippingReturns') }}</a>
-          <a href="/" class="py-1.5 block">{{ $t('general.privacyPolicy') }}</a>
-          <a href="/" class="py-1.5 block">{{ $t('general.termsConditions') }}</a>
+          <ClientOnly>
+            <NuxtLink to="/shipping-returns" class="py-1.5 block">{{ $t('general.shippingReturns') }}</NuxtLink>
+            <template #fallback>
+              <a href="/shipping-returns" class="py-1.5 block">{{ $t('general.shippingReturns') }}</a>
+            </template>
+          </ClientOnly>
+          <ClientOnly>
+            <NuxtLink to="/privacy-policy" class="py-1.5 block">{{ $t('general.privacyPolicy') }}</NuxtLink>
+            <template #fallback>
+              <a href="/privacy-policy" class="py-1.5 block">{{ $t('general.privacyPolicy') }}</a>
+            </template>
+          </ClientOnly>
+          <ClientOnly>
+            <NuxtLink to="/terms-conditions" class="py-1.5 block">{{ $t('general.termsConditions') }}</NuxtLink>
+            <template #fallback>
+              <a href="/terms-conditions" class="py-1.5 block">{{ $t('general.termsConditions') }}</a>
+            </template>
+          </ClientOnly>
         </div>
       </div>
       <div class="w-[42.857%] lg:w-auto">
@@ -74,7 +89,7 @@ const { wishlistLink } = useAuth();
               <a href="/wishlist" class="py-1.5 block">{{ $t('shop.wishlist') }}</a>
             </template>
           </ClientOnly>
-          <a href="/" class="py-1.5 block">{{ $t('general.newsletter') }}</a>
+          
         </div>
       </div>
     </div>
