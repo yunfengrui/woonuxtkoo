@@ -23,12 +23,11 @@ useSeoMeta({
     <HeroBanner />
 
     <div class="container flex flex-wrap items-center justify-center my-16 text-center gap-x-8 gap-y-4 brand lg:justify-between">
-      <img src="/images/logoipsum-211.svg" alt="Brand 1" width="132" height="35" />
-      <img src="/images/logoipsum-221.svg" alt="Brand 2" width="119" height="30" />
-      <img src="/images/logoipsum-225.svg" alt="Brand 3" width="49" height="48" />
-      <img src="/images/logoipsum-280.svg" alt="Brand 4" width="78" height="30" />
-      <img src="/images/logoipsum-284.svg" alt="Brand 5" width="70" height="44" />
-      <img src="/images/logoipsum-215.svg" alt="Brand 6" width="132" height="40" />
+      <img src="/images/joyberg.svg" alt="Joyberg - Gifts for Reading Lovers and Writers" width="100" height="40" />
+      <img src="/images/DSTELIN.svg" alt="DSTELIN" width="100" height="40" />
+      <img src="/images/Kaistyle.svg" alt="KAISTYLE - Gifts for Tech Geeks" width="100" height="40" />
+      <img src="/images/Furkicks.svg" alt="Furkicks - Gifts for Dogs and Cats" width="100" height="40" />
+      <img src="/images/allreli.svg" alt="allreli" width="100" height="40" />
     </div>
 
     <section class="container my-16">
