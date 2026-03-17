@@ -499,60 +499,12 @@ const formMessage = ref('');
 const submittingMessage = ref(false);
 const submitMessageSuccess = ref(false);
 const submitMessageError = ref('');
-const turnstileContainer = ref<HTMLElement | null>(null);
-const turnstileLoaded = ref(false);
+const showTurnstile = ref(false);
 const turnstileToken = ref<string>('');
-const turnstileWidgetId = ref<any>(null);
-const siteKey =
-  ((runtimeConfig.public as any)?.TURNSTILE_SITE_KEY as string) ||
-  ((runtimeConfig.public as any)?.NUXT_PUBLIC_TURNSTILE_SITE_KEY as string) ||
-  ((runtimeConfig.public as any)?.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string) ||
-  ((import.meta as any).env?.NUXT_PUBLIC_TURNSTILE_SITE_KEY as string) ||
-  ((import.meta as any).env?.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string) ||
-  '';
-
-const renderTurnstile = (): void => {
-  const w: any = window as any;
-  if (!w.turnstile || !turnstileContainer.value || !siteKey) return;
-  if (turnstileWidgetId.value) {
-    try {
-      w.turnstile.reset(turnstileWidgetId.value);
-    } catch {}
-    return;
-  }
-  turnstileWidgetId.value = w.turnstile.render(turnstileContainer.value, {
-    sitekey: siteKey,
-    callback: (token: string) => {
-      turnstileToken.value = token;
-    },
-  });
-};
-
-const loadTurnstile = (): void => {
-  if (!import.meta.client) return;
-  const already = !!document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]');
-  if (already) {
-    turnstileLoaded.value = true;
-    renderTurnstile();
-    return;
-  }
-  if (turnstileLoaded.value) return;
-  const s = document.createElement('script');
-  s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-  s.async = true;
-  s.defer = true;
-  s.onload = () => {
-    turnstileLoaded.value = true;
-    renderTurnstile();
-  };
-  document.head.appendChild(s);
-};
 
 const onMessageAreaActivate = async (): Promise<void> => {
   await nextTick();
-  loadTurnstile();
-  // If script is already present and widget not rendered yet, try render explicitly
-  renderTurnstile();
+  showTurnstile.value = true;
 };
 
 const handleSubmitMessage = async (): Promise<void> => {
@@ -710,7 +662,7 @@ const handleSubmitMessage = async (): Promise<void> => {
           <input type="hidden" :value="product?.name || ''" />
           <input type="hidden" :value="canonicalUrl" />
           <ClientOnly>
-            <div ref="turnstileContainer" class="mt-2"></div>
+                <NuxtTurnstile v-if="showTurnstile" v-model="turnstileToken" class="mt-2" />
           </ClientOnly>
           <Button type="submit" :loading="submittingMessage" class="w-full">Submit</Button>
           <div v-if="submitMessageSuccess" class="text-green-600 dark:text-green-400">Submitted successfully</div>

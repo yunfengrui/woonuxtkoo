@@ -1,21 +1,11 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const token = (body?.token || '').toString();
-  const secret =
-    process.env.TURNSTILE_SECRET_KEY ||
-    process.env.NUXT_TURNSTILE_SECRET_KEY ||
-    process.env.NUXT_PRIVATE_TURNSTILE_SECRET_KEY ||
-    '';
-  if (!token || !secret) {
-    throw createError({ statusCode: 400, statusMessage: 'Missing token or secret' });
+  if (!token) {
+    throw createError({ statusCode: 400, statusMessage: 'Missing token' });
   }
-  const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ secret, response: token }).toString(),
-  });
-  const verifyJson = await verifyRes.json();
-  if (!verifyJson?.success) {
+  const result: any = await verifyTurnstileToken(token);
+  if (!result?.success) {
     throw createError({ statusCode: 400, statusMessage: 'Turnstile verification failed' });
   }
   const data = {
