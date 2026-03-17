@@ -28,6 +28,26 @@
       "source": "/news-sitemap.xml",
       "destination": "/sitemap_index.xml",
       "permanent": true
+    },
+    {
+      "source": "/products",
+      "destination": "/product",
+      "permanent": true
+    },
+    {
+      "source": "/products/:path*",
+      "destination": "/product/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/collections",
+      "destination": "/product-category",
+      "permanent": true
+    },
+    {
+      "source": "/collections/:path*",
+      "destination": "/product-category/:path*",
+      "permanent": true
     }
   ]
 }
