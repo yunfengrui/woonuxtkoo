@@ -501,27 +501,48 @@ const submitMessageError = ref('');
 const turnstileContainer = ref<HTMLElement | null>(null);
 const turnstileLoaded = ref(false);
 const turnstileToken = ref<string>('');
+const turnstileWidgetId = ref<any>(null);
 const siteKey =
-  (runtimeConfig.public as any)?.NEXT_PUBLIC_TURNSTILE_SITE_KEY ||
+  ((runtimeConfig.public as any)?.TURNSTILE_SITE_KEY as string) ||
+  ((runtimeConfig.public as any)?.NUXT_PUBLIC_TURNSTILE_SITE_KEY as string) ||
+  ((runtimeConfig.public as any)?.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string) ||
+  ((import.meta as any).env?.NUXT_PUBLIC_TURNSTILE_SITE_KEY as string) ||
   ((import.meta as any).env?.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string) ||
   '';
 
+const renderTurnstile = (): void => {
+  const w: any = window as any;
+  if (!w.turnstile || !turnstileContainer.value || !siteKey) return;
+  if (turnstileWidgetId.value) {
+    try {
+      w.turnstile.reset(turnstileWidgetId.value);
+    } catch {}
+    return;
+  }
+  turnstileWidgetId.value = w.turnstile.render(turnstileContainer.value, {
+    sitekey: siteKey,
+    callback: (token: string) => {
+      turnstileToken.value = token;
+    },
+  });
+};
+
 const loadTurnstile = (): void => {
-  if (turnstileLoaded.value || !import.meta.client) return;
+  if (!import.meta.client) return;
+  const already = !!document.querySelector('script[src*="challenges.cloudflare.com/turnstile"]');
+  if (already) {
+    turnstileLoaded.value = true;
+    renderTurnstile();
+    return;
+  }
+  if (turnstileLoaded.value) return;
   const s = document.createElement('script');
   s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
   s.async = true;
   s.defer = true;
   s.onload = () => {
     turnstileLoaded.value = true;
-    if ((window as any).turnstile && turnstileContainer.value && siteKey) {
-      (window as any).turnstile.render(turnstileContainer.value, {
-        sitekey: siteKey,
-        callback: (token: string) => {
-          turnstileToken.value = token;
-        },
-      });
-    }
+    renderTurnstile();
   };
   document.head.appendChild(s);
 };
@@ -535,6 +556,9 @@ const handleSubmitMessage = async (): Promise<void> => {
     submitMessageError.value = '';
     submitMessageSuccess.value = false;
     submittingMessage.value = true;
+    if (!turnstileToken.value) {
+      throw createError({ statusCode: 400, statusMessage: 'Missing Turnstile token' });
+    }
     const body = {
       name: formName.value,
       email: formEmail.value,
@@ -659,34 +683,35 @@ const handleSubmitMessage = async (): Promise<void> => {
             <WishlistButton :product />
             <ShareButton :product />
           </div>
-          <div class="my-12">
-            <div class="mb-4 text-xl font-semibold dark:text-white">Send a Message</div>
-            <form class="grid gap-4 max-w-xl" @submit.prevent="handleSubmitMessage">
-              <input v-model="formName" class="p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" type="text" placeholder="Name" required />
-              <input v-model="formEmail" class="p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" type="email" placeholder="Email" required />
-              <input v-model="formCountry" class="p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" type="text" placeholder="Country" />
-              <input v-model="formLanguage" class="p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" type="text" placeholder="Language" />
-              <textarea
-                v-model="formMessage"
-                class="p-2 border rounded-lg min-h-[120px] dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                placeholder="Message"
-                required
-                @focus="onMessageAreaActivate"
-                @click="onMessageAreaActivate" />
-              <input type="hidden" :value="product?.name || ''" />
-              <input type="hidden" :value="canonicalUrl" />
-              <ClientOnly>
-                <div ref="turnstileContainer" class="mt-2"></div>
-              </ClientOnly>
-              <Button type="submit" :loading="submittingMessage" class="w-full">Submit</Button>
-              <div v-if="submitMessageSuccess" class="text-green-600 dark:text-green-400">Submitted successfully</div>
-              <div v-if="submitMessageError" class="text-red-600 dark:text-red-400">{{ submitMessageError }}</div>
-            </form>
-          </div>
+
         </div>
       </div>
       <div v-if="product.description || product.reviews" class="my-32">
         <ProductTabs :product />
+      </div>
+      <div class="my-12">
+        <div class="mb-4 text-xl font-semibold dark:text-white">Send a Message</div>
+          <form class="grid gap-4 max-w-xl" @submit.prevent="handleSubmitMessage">
+          <input v-model="formName" class="p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" type="text" placeholder="Name" required />
+          <input v-model="formEmail" class="p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" type="email" placeholder="Email" required />
+          <input v-model="formCountry" class="p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" type="text" placeholder="Country" />
+          <input v-model="formLanguage" class="p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" type="text" placeholder="Language" />
+          <textarea
+            v-model="formMessage"
+            class="p-2 border rounded-lg min-h-[120px] dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            placeholder="Message"
+            required
+            @focus="onMessageAreaActivate"
+            @click="onMessageAreaActivate" />
+          <input type="hidden" :value="product?.name || ''" />
+          <input type="hidden" :value="canonicalUrl" />
+          <ClientOnly>
+            <div ref="turnstileContainer" class="mt-2"></div>
+          </ClientOnly>
+          <Button type="submit" :loading="submittingMessage" class="w-full">Submit</Button>
+          <div v-if="submitMessageSuccess" class="text-green-600 dark:text-green-400">Submitted successfully</div>
+          <div v-if="submitMessageError" class="text-red-600 dark:text-red-400">{{ submitMessageError }}</div>
+        </form>
       </div>
       <div class="my-32" v-if="product.related && storeSettings.showRelatedProducts">
         <div class="mb-4 text-xl font-semibold dark:text-white">{{ $t('shop.youMayLike') }}</div>

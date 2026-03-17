@@ -1,7 +1,11 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const token = (body?.token || '').toString();
-  const secret = process.env.TURNSTILE_SECRET_KEY || '';
+  const secret =
+    process.env.TURNSTILE_SECRET_KEY ||
+    process.env.NUXT_TURNSTILE_SECRET_KEY ||
+    process.env.NUXT_PRIVATE_TURNSTILE_SECRET_KEY ||
+    '';
   if (!token || !secret) {
     throw createError({ statusCode: 400, statusMessage: 'Missing token or secret' });
   }
