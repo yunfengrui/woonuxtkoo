@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { StockStatusEnum, ProductTypesEnum, type AddToCartInput } from '#gql/default';
 import type { ExternalProduct, ProductDetail, SimpleProduct, VariableProduct, Variation, VariationAttribute } from '#types/gql';
+import { nextTick } from 'vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -547,8 +548,11 @@ const loadTurnstile = (): void => {
   document.head.appendChild(s);
 };
 
-const onMessageAreaActivate = (): void => {
+const onMessageAreaActivate = async (): Promise<void> => {
+  await nextTick();
   loadTurnstile();
+  // If script is already present and widget not rendered yet, try render explicitly
+  renderTurnstile();
 };
 
 const handleSubmitMessage = async (): Promise<void> => {
