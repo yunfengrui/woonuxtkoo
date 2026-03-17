@@ -606,15 +606,21 @@ const handleSubmitMessage = async (): Promise<void> => {
             <div
               v-if="isVariableProduct || isSimpleProduct"
               class="fixed bottom-0 left-0 z-10 flex items-center w-full gap-4 p-4 mt-12 shadow-lg bg-white/90 md:static md:bg-transparent md:p-0 md:shadow-none dark:shadow-gray-900">
-              <input
-                v-model="quantity"
-                type="number"
-                min="1"
-                aria-label="Quantity"
-                class="flex items-center justify-center w-20 gap-4 p-2 text-left bg-white border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 focus:outline-hidden dark:text-white" />
-              <Button class="flex-1 w-full" :disabled="disabledAddToCart" :loading="addToCartLoading" type="submit">
-                {{ $t('shop.addToCart') }}
-              </Button>
+              <template v-if="stockStatus !== StockStatusEnum.OUT_OF_STOCK">
+                <input
+                  v-model="quantity"
+                  type="number"
+                  min="1"
+                  aria-label="Quantity"
+                  class="flex items-center justify-center w-20 gap-4 p-2 text-left bg-white border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 focus:outline-hidden dark:text-white" />
+                <Button class="flex-1 w-full" :disabled="disabledAddToCart" :loading="addToCartLoading" type="submit">
+                  {{ $t('shop.addToCart') }}
+                </Button>
+              </template>
+              <template v-else>
+                <span class="flex-1 font-semibold text-red-600 dark:text-red-400">{{ $t('shop.outOfStock') }}</span>
+                <WishlistButton :product />
+              </template>
             </div>
             <a
               v-if="externalProduct?.externalUrl"

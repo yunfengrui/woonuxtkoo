@@ -195,16 +195,18 @@ watch(
           </div>
         </template>
       </div>
-      <div v-if="sliderImages.length > 1" class="absolute flex gap-1 bottom-2 justify-self-center">
-        <button
-          v-for="(image, dotIndex) in sliderImages"
-          :key="`dot-${image.key}`"
-          class="product-card-dot rounded-full h-1.5 w-1.5 transition-colors cursor-pointer"
-          :class="dotIndex === currentSlide ? 'bg-white' : 'bg-gray-400/60'"
-          type="button"
-          tabindex="-1"
-          :aria-label="`View image ${dotIndex + 1} of ${sliderImages.length}`"
-          @click="scrollToSlide(dotIndex)" />
+      <div v-if="sliderImages.length > 1" class="absolute left-0 right-0 bottom-2 px-2">
+        <div class="mx-auto max-w-full flex gap-1 justify-center overflow-x-auto custom-scrollbar [-webkit-overflow-scrolling:touch]">
+          <button
+            v-for="(image, dotIndex) in sliderImages"
+            :key="`dot-${image.key}`"
+            class="product-card-dot shrink-0 rounded-full h-1.5 w-1.5 transition-colors cursor-pointer"
+            :class="dotIndex === currentSlide ? 'bg-white' : 'bg-gray-400/60'"
+            type="button"
+            tabindex="-1"
+            :aria-label="`View image ${dotIndex + 1} of ${sliderImages.length}`"
+            @click="scrollToSlide(dotIndex)" />
+        </div>
       </div>
     </div>
     <div class="p-2">
