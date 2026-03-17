@@ -3,7 +3,7 @@
     <h1 class="mb-8 text-3xl font-semibold text-primary">Terms & Conditions</h1>
     <div class="my-8 prose">
       <p>
-        Welcome to OwlDeals.co.uk. By accessing or using our website, you agree to be bound by these Terms & Conditions and our Privacy Policy.
+        Welcome to Koopower. By accessing or using our website, you agree to be bound by these Terms & Conditions and our Privacy Policy.
       </p>
       <h2>Purchases</h2>
       <p>
@@ -11,13 +11,17 @@
       </p>
       <h2>Shipping and Returns</h2>
       <p>
-        We offer UK free shipping on most items. Returns are accepted within 30 days of delivery for unused items in original packaging. For details, see
+        We ship to the USA, UK, and Germany. Delivery time depends on destination and carrier; most orders arrive within 5–7 business days, and overseas deliveries may take 7–16 days. You can select a delivery method during checkout. Returns are accepted within 30 days of delivery for items in original packaging. For details, see
         <a href="/shipping-returns">Shipping & Returns</a>.
+      </p>
+      <h2>Warranty</h2>
+      <p>
+        Koopower offers a 30-Day Money-Back Guarantee for any reason and a 14-month warranty for quality-related issues.
       </p>
       <h2>Contact</h2>
       <p>
         For any questions regarding these terms, please email
-        <a href="mailto:support@owldeals.co.uk">support@owldeals.co.uk</a>.
+        <a href="mailto:support@koopower.com">support@koopower.com</a>.
       </p>
     </div>
   </main>

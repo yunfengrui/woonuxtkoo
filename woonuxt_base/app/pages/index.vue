@@ -22,14 +22,6 @@ useSeoMeta({
   <main>
     <HeroBanner />
 
-    <div class="container flex flex-wrap items-center justify-center my-16 text-center gap-x-8 gap-y-4 brand lg:justify-between">
-      <img src="/images/joyberg.svg" alt="Joyberg - Gifts for Reading Lovers and Writers" width="100" height="40" />
-      <img src="/images/DSTELIN.svg" alt="DSTELIN" width="100" height="40" />
-      <img src="/images/Kaistyle.svg" alt="KAISTYLE - Gifts for Tech Geeks" width="100" height="40" />
-      <img src="/images/Furkicks.svg" alt="Furkicks - Gifts for Dogs and Cats" width="100" height="40" />
-      <img src="/images/allreli.svg" alt="allreli" width="100" height="40" />
-    </div>
-
     <section class="container my-16">
       <div class="flex items-end justify-between">
         <h2 class="text-lg font-semibold md:text-2xl dark:text-white">{{ $t('shop.shopByCategory') }}</h2>

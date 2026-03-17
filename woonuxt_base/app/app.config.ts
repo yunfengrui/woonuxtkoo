@@ -4,10 +4,10 @@
  * Below are the default values.
  */
 export default defineAppConfig({
-  siteName: 'OwlDeals',
-  shortDescription: 'OwlDeals.co.uk — Discount gifts with UK free shipping.',
-  description: 'OwlDeals.co.uk offers curated discount gifts with UK free shipping. Enjoy great deals and fast, reliable delivery across the UK. For support, email support@owldeals.co.uk.',
-  baseUrl: 'https://www.owldeals.co.uk',
+  siteName: 'Koopower',
+  shortDescription: 'Koopower — Innovative decorative lighting for cozy homes.',
+  description: 'Koopower offers innovative, eco-friendly decorative lights to illuminate your home. Shipping to USA, UK, and Germany. For support, email support@koopower.com.',
+  baseUrl: 'https://www.koopower.com',
   siteImage: 'https://user-images.githubusercontent.com/5116925/218879668-f4c1f9fd-bef4-44b0-bc7f-e87d994aa3a1.png',
   stripePaymentMethod: 'payment', // 'card' or 'payment'
   // Stripe Payment Method Options:

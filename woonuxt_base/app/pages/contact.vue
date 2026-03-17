@@ -3,11 +3,11 @@
     <h1 class="mb-8 text-3xl font-semibold text-primary">Contact Us</h1>
     <div class="my-8 prose">
       <p>
-        OwlDeals.co.uk is a UK-based discount gift site offering great deals and free shipping across the UK.
+        Koopower is a decorative lighting brand committed to innovative, sustainable design that brings warmth and comfort to your home.
       </p>
       <p>
         For any questions, order support, or partnership inquiries, please email
-        <a href="mailto:support@owldeals.co.uk">support@owldeals.co.uk</a>.
+        <a href="mailto:support@koopower.com">support@koopower.com</a>.
       </p>
     </div>
   </div>

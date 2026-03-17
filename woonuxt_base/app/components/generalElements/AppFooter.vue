@@ -96,8 +96,8 @@ const { wishlistLink } = useAuth();
     <div class="container border-t border-gray-200 dark:border-gray-700 flex items-center justify-center mb-4">
       <div class="copywrite">
         <p class="py-4 text-xs text-center text-gray-600 dark:text-gray-400">
-          © OwlDeals.co.uk — Discount gifts with UK free shipping. Contact:
-          <a href="mailto:support@owldeals.co.uk">support@owldeals.co.uk</a>
+          © Koopower — Innovative decorative lighting for cozy homes. Contact:
+          <a href="mailto:support@koopower.com">support@koopower.com</a>
         </p>
       </div>
       <SocialIcons class="ml-auto" />

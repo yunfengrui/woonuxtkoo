@@ -4,8 +4,8 @@
     <div class="my-8 prose">
       <h2>Who We Are</h2>
       <p>
-        OwlDeals.co.uk is a UK-based discount gift site offering great deals and free shipping across the UK. If you have questions about this policy, email
-        <a href="mailto:support@owldeals.co.uk">support@owldeals.co.uk</a>.
+        Koopower is a decorative lighting brand focused on innovation and sustainability. If you have questions about this policy, email
+        <a href="mailto:support@koopower.com">support@koopower.com</a>.
       </p>
 
       <h2>Information We Collect</h2>
@@ -27,14 +27,12 @@
 
       <h2>Cookies</h2>
       <p>
-        We use cookies to enable essential site features (e.g., cart, login) and to improve performance. You can manage cookies in your browser settings. Some
-        features may not function without cookies.
+        We use cookies to enable essential site features (e.g., cart, login) and to improve performance. You can manage cookies in your browser settings. Some features may not function without cookies.
       </p>
 
       <h2>Sharing Your Information</h2>
       <p>
-        We do not sell your personal information. We may share data with trusted providers to process payments, deliver orders, or provide analytics, subject to
-        appropriate safeguards.
+        We do not sell your personal information. We may share data with trusted service providers to process payments, deliver orders, or provide analytics, subject to appropriate safeguards.
       </p>
 
       <h2>Data Retention</h2>
@@ -45,13 +43,13 @@
       <h2>Your Rights</h2>
       <p>
         You can request access, correction, or deletion of your personal data. To make a request, email
-        <a href="mailto:support@owldeals.co.uk">support@owldeals.co.uk</a>.
+        <a href="mailto:support@koopower.com">support@koopower.com</a>.
       </p>
 
       <h2>Contact</h2>
       <p>
         For privacy inquiries, please contact
-        <a href="mailto:support@owldeals.co.uk">support@owldeals.co.uk</a>.
+        <a href="mailto:support@koopower.com">support@koopower.com</a>.
       </p>
     </div>
   </main>
