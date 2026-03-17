@@ -4,6 +4,8 @@ query getProduct($slug: ID!, $frontEndUrl: String = "") {
     type
     databaseId
     id
+    externalImageUrl
+    externalGalleryUrls
     fullYoastHead(sanitize: true, frontendUrl: $frontEndUrl)
     metaData {
       id

@@ -172,8 +172,49 @@ const shouldSkipStockRefresh = computed<boolean>(() => isExternalProduct.value);
 
 const displayProduct = computed(() => activeVariation.value || product.value);
 const priceTarget = computed(() => activeVariation.value || product.value);
-const productImage = computed(() => product.value?.image || null);
-const productGallery = computed(() => ({ nodes: product.value?.galleryImages?.nodes ?? [] }));
+const productImage = computed(() => {
+  const img = product.value?.image || null;
+  if (img?.sourceUrl) return img;
+  const external = (product.value as any)?.externalImageUrl as string | undefined;
+  if (external) {
+    return {
+      sourceUrl: external,
+      altText: product.value?.name || '',
+      title: product.value?.name || '',
+      databaseId: (product.value?.image as any)?.databaseId ?? product.value?.databaseId ?? 0,
+    };
+  }
+  return img;
+});
+const productGallery = computed(() => {
+  const nodes = product.value?.galleryImages?.nodes ?? [];
+  if (nodes.length) return { nodes };
+  const rawExternal = ((product.value as any)?.externalGalleryUrls ?? []) as (string | null)[];
+  const flattened: string[] = [];
+  rawExternal.forEach((entry) => {
+    if (!entry) return;
+    entry
+      .split(',')
+      .map((s) => s.trim())
+      .forEach((url) => {
+        if (url) flattened.push(url);
+      });
+  });
+  const seen = new Set<string>();
+  const extNodes = flattened
+    .filter((url) => {
+      if (seen.has(url)) return false;
+      seen.add(url);
+      return true;
+    })
+    .map((url, idx) => ({
+      sourceUrl: url,
+      altText: product.value?.name || '',
+      title: product.value?.name || '',
+      databaseId: -1000 - idx,
+    }));
+  return { nodes: extNodes };
+});
 const averageRating = computed(() => product.value?.averageRating ?? 0);
 const reviewCount = computed(() => product.value?.reviewCount ?? 0);
 
