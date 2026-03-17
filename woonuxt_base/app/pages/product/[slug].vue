@@ -489,6 +489,78 @@ useHead({
     },
   ],
 });
+
+const formName = ref('');
+const formEmail = ref('');
+const formCountry = ref('');
+const formLanguage = ref('');
+const formMessage = ref('');
+const submittingMessage = ref(false);
+const submitMessageSuccess = ref(false);
+const submitMessageError = ref('');
+const turnstileContainer = ref<HTMLElement | null>(null);
+const turnstileLoaded = ref(false);
+const turnstileToken = ref<string>('');
+const siteKey =
+  (runtimeConfig.public as any)?.NEXT_PUBLIC_TURNSTILE_SITE_KEY ||
+  ((import.meta as any).env?.NEXT_PUBLIC_TURNSTILE_SITE_KEY as string) ||
+  '';
+
+const loadTurnstile = (): void => {
+  if (turnstileLoaded.value || !import.meta.client) return;
+  const s = document.createElement('script');
+  s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+  s.async = true;
+  s.defer = true;
+  s.onload = () => {
+    turnstileLoaded.value = true;
+    if ((window as any).turnstile && turnstileContainer.value && siteKey) {
+      (window as any).turnstile.render(turnstileContainer.value, {
+        sitekey: siteKey,
+        callback: (token: string) => {
+          turnstileToken.value = token;
+        },
+      });
+    }
+  };
+  document.head.appendChild(s);
+};
+
+const onMessageAreaActivate = (): void => {
+  loadTurnstile();
+};
+
+const handleSubmitMessage = async (): Promise<void> => {
+  try {
+    submitMessageError.value = '';
+    submitMessageSuccess.value = false;
+    submittingMessage.value = true;
+    const body = {
+      name: formName.value,
+      email: formEmail.value,
+      country: formCountry.value,
+      language: formLanguage.value,
+      message: formMessage.value,
+      product_url: canonicalUrl.value,
+      product_name: product.value?.name || '',
+      token: turnstileToken.value,
+    };
+    const res = await $fetch('/api/messages', { method: 'POST', body });
+    if (res) {
+      submitMessageSuccess.value = true;
+      formName.value = '';
+      formEmail.value = '';
+      formCountry.value = '';
+      formLanguage.value = '';
+      formMessage.value = '';
+      turnstileToken.value = '';
+    }
+  } catch (e: any) {
+    submitMessageError.value = e?.data?.message || 'Submission failed';
+  } finally {
+    submittingMessage.value = false;
+  }
+};
 </script>
 
 <template>
@@ -586,6 +658,30 @@ useHead({
           <div class="flex flex-wrap gap-4">
             <WishlistButton :product />
             <ShareButton :product />
+          </div>
+          <div class="my-12">
+            <div class="mb-4 text-xl font-semibold dark:text-white">Send a Message</div>
+            <form class="grid gap-4 max-w-xl" @submit.prevent="handleSubmitMessage">
+              <input v-model="formName" class="p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" type="text" placeholder="Name" required />
+              <input v-model="formEmail" class="p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" type="email" placeholder="Email" required />
+              <input v-model="formCountry" class="p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" type="text" placeholder="Country" />
+              <input v-model="formLanguage" class="p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white" type="text" placeholder="Language" />
+              <textarea
+                v-model="formMessage"
+                class="p-2 border rounded-lg min-h-[120px] dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                placeholder="Message"
+                required
+                @focus="onMessageAreaActivate"
+                @click="onMessageAreaActivate" />
+              <input type="hidden" :value="product?.name || ''" />
+              <input type="hidden" :value="canonicalUrl" />
+              <ClientOnly>
+                <div ref="turnstileContainer" class="mt-2"></div>
+              </ClientOnly>
+              <Button type="submit" :loading="submittingMessage" class="w-full">Submit</Button>
+              <div v-if="submitMessageSuccess" class="text-green-600 dark:text-green-400">Submitted successfully</div>
+              <div v-if="submitMessageError" class="text-red-600 dark:text-red-400">{{ submitMessageError }}</div>
+            </form>
           </div>
         </div>
       </div>
