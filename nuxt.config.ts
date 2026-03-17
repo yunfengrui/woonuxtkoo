@@ -47,8 +47,9 @@ export default defineNuxtConfig({
       failOnError: false,
     },
     routeRules: {
-      '/products/:splat*': { redirect: { to: '/product/:splat*', statusCode: 301 } },
-      '/collections/:splat*': { redirect: { to: '/product-category/:splat*', statusCode: 301 } },
+      '/products/**': { redirect: { to: '/product/**', statusCode: 301 } },
+      '/collections/**': { redirect: { to: '/product-category/**', statusCode: 301 } },
+      '/products/led-kerzen-mit-fernbedienung': { redirect: { to: '/product/led-kerzen-mit-fernbedienung', statusCode: 301 } }
     },
   },
 });
