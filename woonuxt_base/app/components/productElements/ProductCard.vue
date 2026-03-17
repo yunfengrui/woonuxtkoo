@@ -95,6 +95,8 @@ const sliderImages = computed<ProductImage[]>(() => {
   return images;
 });
 
+const MAX_DOTS = 4;
+const dotImages = computed<ProductImage[]>(() => sliderImages.value.slice(0, MAX_DOTS));
 const activeVariationImageSrc = computed<string | null>(() => {
   if (!paColor.value.length) return null;
   const variations = props.node?.variations?.nodes || [];
@@ -195,16 +197,16 @@ watch(
           </div>
         </template>
       </div>
-      <div v-if="sliderImages.length > 1" class="absolute left-0 right-0 bottom-2 px-2">
+      <div v-if="dotImages.length > 1" class="absolute left-0 right-0 bottom-2 px-2">
         <div class="mx-auto max-w-full flex gap-1 justify-center overflow-x-auto custom-scrollbar [-webkit-overflow-scrolling:touch]">
           <button
-            v-for="(image, dotIndex) in sliderImages"
+            v-for="(image, dotIndex) in dotImages"
             :key="`dot-${image.key}`"
             class="product-card-dot shrink-0 rounded-full h-1.5 w-1.5 transition-colors cursor-pointer"
             :class="dotIndex === currentSlide ? 'bg-white' : 'bg-gray-400/60'"
             type="button"
             tabindex="-1"
-            :aria-label="`View image ${dotIndex + 1} of ${sliderImages.length}`"
+            :aria-label="`View image ${dotIndex + 1} of ${dotImages.length}`"
             @click="scrollToSlide(dotIndex)" />
         </div>
       </div>

@@ -662,7 +662,7 @@ const handleSubmitMessage = async (): Promise<void> => {
       </div>
           <div class="my-12">
             <div class="grid gap-8 md:grid-cols-2 items-start">
-              <div class="order-1 md:order-none">
+              <div class="order-first md:order-none">
                 <div class="p-4 rounded border border-gray-300 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
                   <div class="mb-2 text-lg font-semibold dark:text-white">Form Information</div>
                   <p class="text-sm text-gray-700 dark:text-gray-300">

@@ -10,6 +10,8 @@ const { cart, toggleCart, isCartMutating } = useCart();
       size="34"
       @click="toggleCart(false)" />
 
+    <EmptyCart v-if="cart && !cart.isEmpty" class="rounded-lg shadow-lg p-1.5 hover:bg-red-400 hover:text-white" />
+
     <div class="mt-8 text-center text-gray-900 dark:text-white font-semibold">
       {{ $t('shop.cart') }}
       <span v-if="cart?.contents?.productCount"> ({{ cart?.contents?.productCount }}) </span>
