@@ -10,13 +10,12 @@ export default defineNuxtConfig({
 
   modules: ["@nuxtjs/turnstile"],
 
+  image: {
+    provider: 'ipx',
+    
+  },
+
   runtimeConfig: {
-    ipx: {
-      dir: resolve('./woonuxt_base/public'),
-      http: {
-        domains: ['koopower.eslife.com', 'img.eslife.com'],
-      },
-    },
     public: {
       TURNSTILE_SITE_KEY:
         process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY ||
