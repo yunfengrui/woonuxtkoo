@@ -674,7 +674,20 @@ const handleSubmitMessage = async (): Promise<void> => {
                   class="mt-4 p-4 rounded border border-green-400 bg-green-50 text-green-700 dark:bg-green-900 dark:border-green-700 dark:text-green-100">
                   <div class="mb-1 text-lg font-semibold">Submission Successful</div>
                   <div class="text-sm" v-if="submitRecord?.id">Reference number: <span class="font-semibold">{{ submitRecord.id }}</span></div>
-                  <div class="text-sm">We will contact you within 24 hours.</div>
+                  <div class="text-sm">Use it to track your inquiry. We typically reply within 12–24 hours.</div>
+                </div>
+                <div class="mt-4 p-4 rounded-lg border border-gray-200 shadow-sm dark:border-gray-700">
+                  <ul class="space-y-3 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    <li class="flex items-center">
+                      <span class="mr-2 text-green-500">✔</span> Fast response within 24h
+                    </li>
+                    <li class="flex items-center">
+                      <span class="mr-2 text-green-500">✔</span> Free sample available
+                    </li>
+                    <li class="flex items-center">
+                      <span class="mr-2 text-green-500">✔</span> OEM & custom support
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div>
