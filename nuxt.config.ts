@@ -1,3 +1,7 @@
+import { createResolver } from '@nuxt/kit';
+
+const { resolve } = createResolver(import.meta.url);
+
 export default defineNuxtConfig({
   // Get all the pages, components, composables and plugins from the parent theme
   extends: ["./woonuxt_base"],
@@ -8,6 +12,11 @@ export default defineNuxtConfig({
 
   image: {
     provider: 'ipx',
+    providers: {
+      ipx: {
+        dir: resolve('./woonuxt_base/public'),
+      },
+    },
   },
 
   runtimeConfig: {
