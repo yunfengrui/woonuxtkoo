@@ -15,6 +15,11 @@
   ],
   "redirects": [
     {
+      "source": "/collections/outdoor/products/remote-and-timer-36ft-100-led-outdoor-battery-fairy-lights-8-modes-dimmable-ip65-waterproof-warm-white-usa-uk-de",
+      "destination": "/product/battery-operated-led-lights-36ft-100-led-warm-white-waterproof-with-automatic-timer",
+      "permanent": true
+    },
+    {
       "source": "/sitemap.xml",
       "destination": "/sitemap_index.xml",
       "permanent": true

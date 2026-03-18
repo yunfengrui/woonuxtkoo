@@ -16,6 +16,13 @@ export default defineNuxtConfig({
         process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY ||
         process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ||
         '',
+      'graphql-client': {
+        clients: {
+          default: {
+            host: '/api/gql',
+          },
+        },
+      },
     },
     turnstile: {
       secretKey:

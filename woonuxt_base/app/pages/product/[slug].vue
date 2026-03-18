@@ -482,11 +482,11 @@ useHead({
   script: [
     {
       type: 'application/ld+json',
-      children: JSON.stringify(jsonLdProduct.value),
+      innerHTML: JSON.stringify(jsonLdProduct.value),
     },
     {
       type: 'application/ld+json',
-      children: JSON.stringify(breadcrumbJsonLd.value),
+      innerHTML: JSON.stringify(breadcrumbJsonLd.value),
     },
   ],
 });
