@@ -14,6 +14,20 @@ const pagedEdges = computed(() => {
   return edges.value.slice(start, start + PAGE_SIZE);
 });
 
+const visiblePages = computed<(number | 'ellipsis')[]>(() => {
+  const tp = totalPages.value;
+  const cp = currentPage.value;
+  if (tp <= 5) return Array.from({ length: tp }, (_, i) => i + 1);
+  const items: (number | 'ellipsis')[] = [1];
+  if (cp > 3) items.push('ellipsis');
+  const start = Math.max(2, cp - 1);
+  const end = Math.min(tp - 1, cp + 1);
+  for (let p = start; p <= end; p++) items.push(p);
+  if (cp < tp - 2) items.push('ellipsis');
+  items.push(tp);
+  return items;
+});
+
 const goPrev = () => {
   currentPage.value = Math.max(1, currentPage.value - 1);
 };
@@ -56,7 +70,7 @@ const firstInitial = (name?: string) => {
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-32 items-start mt-8">
+  <div class="flex flex-col md:flex-row items-start gap-6 md:gap-12 lg:gap-24 mt-8">
     <div class="flex max-w-sm gap-4 prose dark:prose-invert">
       <ReviewsScore v-if="product.reviews" :reviews="product.reviews" :productId="product.databaseId" :reviewCount="product.reviewCount" />
     </div>
@@ -86,17 +100,19 @@ const firstInitial = (name?: string) => {
         </div>
         <div class="mt-4 text-gray-700 dark:text-gray-300 italic prose-sm dark:prose-invert" v-html="review.node.content"></div>
       </div>
-      <div v-if="totalPages > 1" class="flex items-center justify-center gap-2 pt-6">
+      <div v-if="totalPages > 1" class="flex flex-wrap items-center justify-center gap-2 pt-6">
         <button class="px-3 py-1 rounded border dark:border-gray-600 disabled:opacity-50" :disabled="currentPage === 1" @click="goPrev">Prev</button>
-        <button
-          v-for="p in totalPages"
-          :key="`p-${p}`"
-          class="px-3 py-1 rounded border dark:border-gray-600"
-          :class="p === currentPage ? 'bg-gray-200 dark:bg-gray-700' : ''"
-          @click="goPage(p)"
-        >
-          {{ p }}
-        </button>
+        <template v-for="item in visiblePages" :key="`pg-${String(item)}`">
+          <button
+            v-if="item !== 'ellipsis'"
+            class="px-3 py-1 rounded border dark:border-gray-600"
+            :class="item === currentPage ? 'bg-gray-200 dark:bg-gray-700' : ''"
+            @click="goPage(item as number)"
+          >
+            {{ item }}
+          </button>
+          <span v-else class="px-2 select-none text-gray-400">…</span>
+        </template>
         <button class="px-3 py-1 rounded border dark:border-gray-600 disabled:opacity-50" :disabled="currentPage === totalPages" @click="goNext">Next</button>
       </div>
     </div>
