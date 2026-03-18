@@ -509,6 +509,7 @@ const browserLanguage = computed<string>(() => {
   return (locale as any)?.value || 'en';
 });
 const submitRecord = ref<any | null>(null);
+const submissionSuccessRef = ref<HTMLElement | null>(null);
 
 const onMessageAreaActivate = async (): Promise<void> => {
   await nextTick();
@@ -543,6 +544,8 @@ const handleSubmitMessage = async (): Promise<void> => {
       formLanguage.value = '';
       formMessage.value = '';
       turnstileToken.value = '';
+      await nextTick();
+      submissionSuccessRef.value?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   } catch (e: any) {
     submitMessageError.value = e?.data?.message || 'Submission failed';
@@ -672,6 +675,7 @@ const handleSubmitMessage = async (): Promise<void> => {
                 </div>
                 <div
                   v-if="submitMessageSuccess"
+                  ref="submissionSuccessRef"
                   class="mt-4 p-4 rounded border border-green-400 bg-green-50 text-green-700 dark:bg-green-900 dark:border-green-700 dark:text-green-100">
                   <div class="mb-1 text-lg font-semibold">Submission Successful</div>
                   <div class="text-sm" v-if="submitRecord?.id">Reference number: <span class="font-semibold">{{ submitRecord.id }}</span></div>
