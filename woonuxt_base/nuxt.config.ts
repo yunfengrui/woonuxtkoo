@@ -41,12 +41,7 @@ export default defineNuxtConfig({
       'graphql-client': {
         clients: {
           default: {
-            host: GQL_HOST,
-            headers: { Origin: APP_HOST },
-            fetchOptions: {
-              mode: 'cors',
-              credentials: 'include',
-            },
+            host: '/api/gql',
           },
         },
       },
