@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     product_name: body?.product_name || '',
     ip: { lon: 0, lat: 0 },
   };
-  const res = await fetch('https://pocket.cheerivo.com/api/collections/messages/records', {
+  const res = await fetch('https://pocket.cheerivo.com/api/collections/koopowermessages/records', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
