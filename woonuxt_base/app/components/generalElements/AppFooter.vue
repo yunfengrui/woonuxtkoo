@@ -1,12 +1,14 @@
 <script setup lang="ts">
 const { wishlistLink } = useAuth();
+const colorMode = useColorMode();
 </script>
 
 <template>
   <footer class="bg-white dark:bg-gray-800 order-last">
     <div class="container flex flex-wrap justify-between gap-12 my-24 md:gap-24">
       <div class="mr-auto">
-        <Logo />
+        <img v-if="colorMode.value !== 'dark'" src="/light-logo.png" alt="Logo" class="w-40 h-10 object-contain" />
+        <Logo v-else class="w-40" />
         <WebsiteShortDescription />
         <div class="inline-flex gap-2 justify-start mt-8">
           <LangSwitcher />

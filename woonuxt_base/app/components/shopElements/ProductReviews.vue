@@ -3,6 +3,27 @@ const props = defineProps({
   product: { type: Object, default: null },
 });
 
+const PAGE_SIZE = 6;
+const currentPage = ref(1);
+
+const edges = computed(() => props.product?.reviews?.edges || []);
+const totalReviews = computed(() => edges.value.length);
+const totalPages = computed(() => Math.max(1, Math.ceil(totalReviews.value / PAGE_SIZE)));
+const pagedEdges = computed(() => {
+  const start = (currentPage.value - 1) * PAGE_SIZE;
+  return edges.value.slice(start, start + PAGE_SIZE);
+});
+
+const goPrev = () => {
+  currentPage.value = Math.max(1, currentPage.value - 1);
+};
+const goNext = () => {
+  currentPage.value = Math.min(totalPages.value, currentPage.value + 1);
+};
+const goPage = (p: number) => {
+  currentPage.value = Math.min(Math.max(1, p), totalPages.value);
+};
+
 const isAvatarUsable = (url?: string) => {
   if (!url) return false;
   try {
@@ -39,8 +60,8 @@ const firstInitial = (name?: string) => {
     <div class="flex max-w-sm gap-4 prose dark:prose-invert">
       <ReviewsScore v-if="product.reviews" :reviews="product.reviews" :productId="product.databaseId" :reviewCount="product.reviewCount" />
     </div>
-    <div class="divide-y divide-gray-200 dark:divide-gray-700 flex-1" v-if="product.reviews?.edges && product.reviews.edges.length">
-      <div v-for="review in product.reviews.edges" :key="review.id" class="my-2 py-8">
+    <div class="divide-y divide-gray-200 dark:divide-gray-700 flex-1" v-if="edges.length">
+      <div v-for="review in pagedEdges" :key="review.id" class="my-2 py-8">
         <div class="flex gap-4 items-center">
           <img
             v-if="isAvatarUsable(review.node.author.node.avatar?.url)"
@@ -64,6 +85,19 @@ const firstInitial = (name?: string) => {
           </div>
         </div>
         <div class="mt-4 text-gray-700 dark:text-gray-300 italic prose-sm dark:prose-invert" v-html="review.node.content"></div>
+      </div>
+      <div v-if="totalPages > 1" class="flex items-center justify-center gap-2 pt-6">
+        <button class="px-3 py-1 rounded border dark:border-gray-600 disabled:opacity-50" :disabled="currentPage === 1" @click="goPrev">Prev</button>
+        <button
+          v-for="p in totalPages"
+          :key="`p-${p}`"
+          class="px-3 py-1 rounded border dark:border-gray-600"
+          :class="p === currentPage ? 'bg-gray-200 dark:bg-gray-700' : ''"
+          @click="goPage(p)"
+        >
+          {{ p }}
+        </button>
+        <button class="px-3 py-1 rounded border dark:border-gray-600 disabled:opacity-50" :disabled="currentPage === totalPages" @click="goNext">Next</button>
       </div>
     </div>
   </div>

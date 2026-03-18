@@ -658,7 +658,8 @@ const handleSubmitMessage = async (): Promise<void> => {
         </div>
       </div>
       <div v-if="product.description || product.reviews" class="my-32">
-        <ProductTabs :product />
+        <div v-if="product.description" class="font-light prose dark:prose-invert" v-html="product.description" />
+        <ProductReviews v-if="storeSettings.showReviews && product.reviews" :product="product" class="mt-16" />
       </div>
           <div class="my-12">
             <div class="grid gap-8 md:grid-cols-2 items-start">
